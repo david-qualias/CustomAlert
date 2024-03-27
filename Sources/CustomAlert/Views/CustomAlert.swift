@@ -54,7 +54,7 @@ struct CustomAlert<Content, Actions>: View where Content: View, Actions: View {
                 }
                 
                 if isShowing {
-                    alert.animation(nil, value: height)
+                    alert
                 }
                 
                 if configuration.alignment.hasBottomSpacer {
@@ -64,9 +64,7 @@ struct CustomAlert<Content, Actions>: View where Content: View, Actions: View {
         }
         .captureSize($viewSize)
         .onAppear {
-            withAnimation {
                 isShowing = true
-            }
         }
     }
     
@@ -143,8 +141,6 @@ struct CustomAlert<Content, Actions>: View where Content: View, Actions: View {
         .background(BackgroundView(background: configuration.alert.background))
         .cornerRadius(configuration.alert.cornerRadius)
         .padding(configuration.padding)
-        .transition(configuration.transition)
-        .animation(.default, value: isPresented)
     }
 }
 
