@@ -33,10 +33,10 @@ struct CustomAlertHandler<AlertItem, AlertContent, AlertActions>: ViewModifier w
     }
     
     func body(content: Content) -> some View {
-        if let windowScene = windowScene {
+        if let windowScene {
             content
                 .disabled(item != nil)
-                .windowCover("CustomAlert", isPresented: isPresented, on: windowScene) {
+                .windowCover(isPresented: isPresented, on: windowScene) {
                     alertView
                 } configure: { configuration in
                     configuration.tintColor = .customAlertColor
@@ -47,7 +47,7 @@ struct CustomAlertHandler<AlertItem, AlertContent, AlertActions>: ViewModifier w
         } else {
             content
                 .disabled(item != nil)
-                .windowCover("CustomAlert", isPresented: isPresented) {
+                .windowCover(isPresented: isPresented) {
                     alertView
                 } configure: { configuration in
                     configuration.tintColor = .customAlertColor
@@ -109,7 +109,7 @@ extension CustomAlertHandler where AlertItem == AlertIdentifiable {
         @ViewBuilder alertContent: @escaping () -> AlertContent,
         @ViewBuilder alertActions: @escaping () -> AlertActions
     ) {
-        self._item = isPresented.alert()
+        self._item = Binding(bool: isPresented)
         self.windowScene = windowScene
         self.alertTitle = alertTitle
         self.alertContent = { _ in alertContent() }

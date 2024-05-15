@@ -9,12 +9,6 @@ import SwiftUI
 import Combine
 import WindowKit
 
-enum AlertIdentifiable: Int, Identifiable, Hashable, Equatable {
-    case present
-    
-    var id: Int { rawValue }
-}
-
 public extension View {
     /// Presents an alert when a given condition is true, using an optional text view for
     /// the title.
@@ -177,7 +171,8 @@ public extension View {
     ///   - windowScene: The window scene to present the alert on.
     ///   - content: A `ViewBuilder` returing the alerts main view.
     ///   - actions: A `ViewBuilder` returning the alert's actions.
-    @warn_unqualified_access func customAlert<Item, Content, Actions>(
+    @warn_unqualified_access
+    func customAlert<Item, Content, Actions>(
         _ title: LocalizedStringKey,
         item: Binding<Item?>,
         on windowScene: UIWindowScene,
@@ -262,7 +257,7 @@ public extension View {
         _ title: Text? = nil,
         item: Binding<Item?>,
         @ViewBuilder content: @escaping (Item) -> Content
-    ) -> some View where Item: Identifiable,Content: View {
+    ) -> some View where Item: Identifiable, Content: View {
         self.customAlert(title, item: item, content: content, actions: { _ in /* no actions */ })
     }
     
